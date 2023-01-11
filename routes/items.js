@@ -2,6 +2,7 @@ const express = require('express')
 const router = express.Router()
 
 const ControllerItem = require('../controllers/item')
+const { auth } = require('../middleware')
 
 // const isSeller = (req, res, next) => {
 //     // console.log(req.session);
@@ -27,7 +28,7 @@ router.post('/seller/:UserId/edit/:ItemId', ControllerItem.submitEditItem)
 router.get('/seller/:UserId/delete/:ItemId', ControllerItem.deleteItem)
 router.get('/seller/:UserId/update/:ItemId', ControllerItem.updateItem)
 
-router.get('/buyer/:UserId', ControllerItem.listItemForBuyer)
+router.get('/buyer/:UserId', ControllerItem.listItemForBuyer, auth)
 
 router.get('/buyer/:UserId/buy/:ItemId', ControllerItem.buyItem)
 
