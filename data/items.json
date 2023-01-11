@@ -1,0 +1,40 @@
+[{
+  "name": "Semen 8 Roda",
+  "price": 70000,
+  "stock": 20,
+  "isReady": true,
+  "imageUrl": "shorturl.at/GM035",
+  "UserId": 1
+},
+{
+    "name": "Bata",
+    "price": 1000,
+    "stock": 3000,
+    "isReady": true,
+    "imageUrl": "shorturl.at/cXY37",
+    "UserId": 1
+},
+{
+    "name": "Genteng",
+    "price": 700,
+    "stock": 3000,
+    "isReady": true,
+    "imageUrl": "shorturl.at/twxB7",
+    "UserId": 1
+},
+{
+    "name": "Pasir",
+    "price": 1500000,
+    "stock": 15,
+    "isReady": true,
+    "imageUrl": "shorturl.at/adkRW",
+    "UserId": 1
+},
+{
+    "name": "Cat Tembok",
+    "price": 90000,
+    "stock": 500,
+    "isReady": true,
+    "imageUrl": "shorturl.at/bimR3",
+    "UserId": 1
+}]

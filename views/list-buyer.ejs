@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>List Buyer</title>
+</head>
+<body>
+    <h2>List Buyer</h2>
+    <table border="1">
+        <thead>
+            <tr>
+                <td>No</td>
+                <td>Name</td>
+                <td>Item</td>
+                <td>Price</td>
+                <td>Total Price</td>
+            </tr>
+        </thead>
+        
+        <tbody>
+            <% buyer.forEach((x, index) => { %>
+                <tr>
+                    <td><%= index++ %></td>
+                    <td><%= x.name %></td>
+                    <% let items = x.Items.map(y => { %>
+                        <% return y.name%> 
+                    <% }) %>
+                    <td><%= items %> </td>
+                    <% let price = x.Items.map(y => { %>
+                        <% return y.price%> 
+                    <% }) %>
+                    <td><%= price %> </td>
+                    <% let a = price %>
+                    <% let totalPrice = a.reduce(function(a, b) { return a + b; }, 0) %> 
+                    <td><%= totalPrice %></td>
+                </tr>
+            <% }) %>
+        </tbody>
+    </table>
+</body>
+</html>

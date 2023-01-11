@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Form Add Saldo</title>
+</head>
+<body>
+    <h3>Add your saldo Pak <%=saldo.User.name  %> </h3><br>
+    <form action="/saldos/addSaldo/<%= saldo.UserId %>" method="post">
+        <label for="amount">amount:</label><br>
+        <input type="number" name="amount" id="amount">
+        <br><br>
+
+        <button type="submit">submit</button>
+    </form>
+</body>
+</html>

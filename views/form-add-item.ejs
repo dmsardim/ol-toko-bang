@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Form Add Item</title>
+</head>
+<body>
+    <h2>Form Add Item</h2>
+    <h3>Add your item Pak <%= user.name %>!</h3>
+    <%- include('./partials/error.ejs') %> 
+    <form action="/items/seller/<%= UserId %>/add" method="post">
+        <label for="name">Item name:</label><br>
+        <input type="text" name="name"><br><br>
+        
+        <label for="price">Price:</label><br>
+        <input type="number" name="price"><br><br>
+
+        <label for="stock">Stock:</label><br>
+        <input type="number" name="stock"><br><br>
+
+        <label for="imageUrl">Image Url:</label><br>
+        <input type="text" name="imageUrl"><br><br>
+
+        <button type="submit">Submit</button>
+    </form>
+</body>
+</html>

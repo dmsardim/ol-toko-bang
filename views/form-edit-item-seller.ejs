@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Form Edit Item for Seller </title>
+</head>
+<body>
+    <h2>Form Edit Item</h2>
+    <%- include('./partials/error.ejs') %> 
+    <form action="/items/seller/<%= UserId %>/edit/<%= item.id %>" method="post">
+
+        <label for="name">Item name:</label><br>
+        <input type="text" name="name" value="<%= item.name %>"><br><br>
+        
+        <label for="price">Price:</label><br>
+        <input type="number" name="price" value="<%= item.price %>"><br><br>
+
+        <label for="stock">Stock:</label><br>
+        <input type="number" name="stock" value="<%= item.stock %>"><br><br>
+
+        <label for="imageUrl">Image Url:</label><br>
+        <input type="text" name="imageUrl" value="<%= item.imageUrl %>"><br><br>
+
+        <button type="submit">Submit</button>
+    </form>
+</body>
+</html>

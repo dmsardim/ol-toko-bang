@@ -1,0 +1,9 @@
+<% if (error) { %>
+    <div class="bg-yellow-100 border border-yellow-400 text-red-700 px-4 py-3 rounded relative w-2/3 m-8" role="alert">
+        <strong class="font-bold">Attention!</strong>
+        <span class="block sm:inline"> <% error.split(',').forEach(el => { %>
+            <p style="color: red;"><%= el %> </p>
+        </span>
+        <% }) %>
+    </div>
+<% } %>
