@@ -1,7 +1,8 @@
 
 class Controller {
-static home(req, res) {
-    res.render('home')
+    static home(req, res) {
+        console.log(res.locals)
+        res.render('home', { isAuth: true })
     }
 }
 

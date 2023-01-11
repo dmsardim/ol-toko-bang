@@ -9,13 +9,12 @@ const routerTags = require('./tags')
 
 const { auth } = require('../middleware')
 
+
 router.get('/', Controller.home)
 router.use('/users', routerUsers)
 
-router.use(auth)
-
-router.use('/saldos', routerSaldos)
-router.use('/items', routerItems)
-router.use('/tags', routerTags)
+router.use('/saldos', auth, routerSaldos)
+router.use('/items', auth, routerItems)
+router.use('/tags', auth, routerTags)
 
 module.exports = router

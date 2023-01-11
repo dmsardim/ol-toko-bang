@@ -19,6 +19,11 @@ app.use(session({
     } // untuk https
 }))
 
+app.use((req, res, next) => {
+    res.locals.user = req.session.user 
+    next();
+});
+
 app.use('/', router)
 
 app.listen(port, () => {
