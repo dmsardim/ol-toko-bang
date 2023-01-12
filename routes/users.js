@@ -13,6 +13,7 @@ router.get('/logout', ControllerUser.logout)
 
 
 
+
 // router.use((req, res, next) => {
 //     if (!req.session.email){
 //         const validate = "login first"

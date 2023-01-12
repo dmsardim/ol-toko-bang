@@ -27,7 +27,7 @@
               <a href="/cart/<%= cart.id %>/delete">
                 <i class="fas fa-trash"></i>
               </a>
-              <a href="/">Checkout</a>
+              <a href="/buyer/<%= cart.Item.UserId %>/buy/<%= cart.Item.id %>">Checkout</a>
             </div>
           </div>
           <% }) %>
