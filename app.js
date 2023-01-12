@@ -5,7 +5,8 @@ const session = require('express-session')
 const port = 3000
 
 app.set('view engine', 'ejs')
-app.use(express.urlencoded({extended: false}))
+app.use(express.urlencoded({ extended: false }))
+
 
 app.use(session({
     secret: 'secret!', //harus ada
@@ -14,9 +15,14 @@ app.use(session({
     cookie: {
         secure: false,
         sameSite: true // untuk security dari csrf attack
-    
+
     } // untuk https
 }))
+
+app.use((req, res, next) => {
+    res.locals.user = req.session.user 
+    next();
+});
 
 app.use('/', router)
 

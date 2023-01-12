@@ -11,8 +11,9 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      Item.belongsTo(models.User)
+      Item.belongsToMany(models.User, {through: models.Transaction})
       Item.hasMany(models.ItemTag)
+      Item.belongsTo(models.User)
       Item.belongsToMany(models.Tag, {through: models.ItemTag})
     }
 
@@ -70,6 +71,18 @@ module.exports = (sequelize, DataTypes) => {
         },
         notEmpty: {
           msg: "Image Url is required"
+        }
+      }
+    },
+    description: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      validate: {
+        notNull: {
+          msg: "Description is required"
+        },
+        notEmpty: {
+          msg: "Description is required"
         }
       }
     },

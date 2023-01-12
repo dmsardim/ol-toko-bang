@@ -2,6 +2,8 @@ const express = require('express')
 const router = express.Router()
 
 const ControllerItem = require('../controllers/item')
+const TransactionController = require('../controllers/transaction')
+const { auth } = require('../middleware')
 
 const isSeller = (req, res, next) => {
     // console.log(req.session);

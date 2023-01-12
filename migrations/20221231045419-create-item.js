@@ -24,6 +24,9 @@ module.exports = {
       imageUrl: {
         type: Sequelize.STRING
       },
+      description: {
+        type: Sequelize.TEXT
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE
@@ -32,10 +35,6 @@ module.exports = {
         allowNull: false,
         type: Sequelize.DATE
       },
-      UserId: {
-        type: Sequelize.INTEGER,
-        references: {model:{tableName: "Users"}, key: "id"}
-      }
     });
   },
   down(queryInterface, Sequelize) {

@@ -6,9 +6,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Home</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://kit.fontawesome.com/03c8d5d9a1.js" crossorigin="anonymous"></script>
 </head>
 <body>
-    <a href="users/login">login</a>
-   <a href="users/register">regiester</a>
+    <%- include('partials/navbar') %>
+    <div class="max-w-6xl mx-auto">
+        <img class="object-cover rounded-xl my-5" src="https://images.tokopedia.net/img/cache/1208/NsjrJu/2023/1/11/b007cdfa-c85c-4049-a604-a016988e5218.jpg.webp?ect=4g" alt="">
+
+        <div class="grid grid-cols-5 gap-5">
+            <% items.forEach(item => { %>             
+                <%- include('partials/product', { item }) %>
+            <% }) %>
+        </div>
+    </div>
 </body>
 </html>
