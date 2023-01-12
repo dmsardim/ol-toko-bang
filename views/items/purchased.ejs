@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://kit.fontawesome.com/03c8d5d9a1.js" crossorigin="anonymous"></script>
+</head>
+<body>
+  <%- include('../partials/navbar') %>
+  <div class="max-w-4xl my-14  mx-auto">
+      <div class="text-2xl font-bold">
+        Purchased Item
+      </div>
+      <hr class="my-5">
+      <div class="space-y-5">
+        <% carts.forEach(cart => { %>
+          <div class="flex gap-3 shadow h-32 ">
+            <img src="https://images.tokopedia.net/img/cache/300-square/attachment/2019/3/23/155332611945862/155332611945862_2d5deb88-f3f5-4d17-bc8e-f302ac0de48c.png" alt="">
+            <div class="p-2">
+              <p><%= cart.Item?.name %> </p>
+              <p><%= cart.qty + ' X ' + cart.Item?.formatPrice() %> </p>
+            </div>
+            <div class="p-2">
+              <a href="/cart/<%= cart.id %>/delete">
+                <i class="fas fa-trash"></i>
+              </a>
+              <a href="/carts/<%= cart.id %>/checkout">Checkout</a>
+            </div>
+          </div>
+          <% }) %>
+      </div>
+  </div>
+</body>
+</html>

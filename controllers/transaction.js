@@ -35,6 +35,21 @@ class TransactionController {
       .catch((err) => res.send(err))
   }
 
+  static purchased(req, res) {
+    const UserId = req.session.user.id
+
+    Transaction.findAll({
+      attributes: ['id', 'qty', 'subtotal'],
+      include: Item,
+      where: {
+        UserId,
+        status: 'checkout'
+      }
+    })
+      .then((carts) => res.render('items/purchased', { carts }))
+      .catch((err) => res.send(err))
+  }
+
   static deleteCart(req, res) {
     const { id } = req.params
 

@@ -15,19 +15,19 @@
         <% if (user) { %>
             <div  class="border rounded-lg grid grid-cols-3">
                 <h1 class="p-5  hover:bg-slate-100">
-                    Hallo, <b><%= user.name %></b> <br>
+                    Assalamualaikum, <b><%= user.name %></b> <br>
                     Enjoy your shopping!
                 </h1>
                 <div class="border-x p-5 rounded-lg hover:bg-slate-100">
-                    <p>Your balances : </p>
+                    <p>Your balances : </p> 
                     <h1 class="text-2xl font-semibold">
                         <%= balance.formatBalance() %>
                     </h1>
                 </div>
-                <h1 class="cursor-pointer p-5 flex items-center justify-center gap-2 font-semibold hover:bg-slate-100">
+                <a href="/balances/addBalance/<%= user.id %>"  class="cursor-pointer p-5 flex items-center justify-center gap-2 font-semibold hover:bg-slate-100">
                     <i class="fas fa-plus text-2xl"></i>
                     Add Your Balances
-                </h1>
+                </a>
             </div>
         <% } %>
 

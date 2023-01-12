@@ -1,11 +1,12 @@
-const { User, Item, Balance } = require('../models')
+const { User, Item, Balance, Tag, ItemTag, sequelize } = require('../models')
 const { Op } = require('sequelize')
 const { countStock, countBalanceBuyer, countBalanceSeller } = require('../helper')
 
 class ControllerItem {
     static listItemSeller(req, res) {
         const { UserId } = req.params
-        const { error, byItemName, byShopName } = req.query;
+        const { id } = req.session.user
+        const { error, byItemName } = req.query;
         let option = {
             include: [User],
             where: {},
@@ -22,15 +23,9 @@ class ControllerItem {
                 [Op.iLike]: `%${byItemName}%`
             }
         }
-        // if(byShopName) {
-        //     option.where = {
-        //             User: {
-        //                 name : {
-        //                     [Op.iLike]: `%${byShopName}%`
-        //                 } 
-        //             }
-        //     }
-        // }
+
+
+
         let data = {}
         Item.findAll(option)
             .then((items) => {
@@ -38,7 +33,18 @@ class ControllerItem {
                 return User.findByPk(UserId, { include: Balance })
             })
             .then((user) => {
-                res.render('list-item-seller', { ...data, user, UserId, error })
+                data.user = user
+
+                return sequelize.query(`SELECT sum(t."qty") AS "a",
+                date_part('day', t."createdAt") AS "date"
+                FROM "Transactions" t
+                INNER JOIN "Items" i 
+                ON t."ItemId" = i.id
+                WHERE  status = 'checkout' AND t."UserId" = ${id}
+                GROUP BY "date"`)
+            })
+            .then((stat) => {
+                res.render('list-item-seller', { ...data, UserId, error, statistic: stat[0] })
             })
             .catch((err) => console.log(err))
     }
@@ -55,20 +61,31 @@ class ControllerItem {
     static formAddItem(req, res) {
         const { UserId } = req.params
         const { error } = req.query;
+        let data = {}
         User.findByPk(UserId)
             .then((user) => {
-                res.render('form-add-item', { UserId, user, error })
+                data.user = user
+                return Tag.findAll({ attributes: ['id', 'name'] })
             })
+            .then(tags => {
+                res.render('form-add-item', { UserId, ...data, tags, error })
+            })
+            .catch(err => res.send(err))
     }
 
     static submitAddItem(req, res) {
         const { UserId } = req.params
-        const { name, price, stock, imageUrl, description } = req.body;
+        const { name, price, stock, imageUrl, description, tags } = req.body;
         const input = { name, price, stock, imageUrl, UserId, description }
         Item.create(input)
-            .then(() => {
-                res.redirect(`/items/seller/${UserId}`)
+            .then((item) => {
+                const dataTags = tags.map(el => {
+                    return { ItemId: item.id, TagId: el }
+                })
+                return ItemTag.bulkCreate(dataTags, {})
+
             })
+            .then((_) => res.redirect(`/items/seller/${UserId}`))
             .catch((err) => {
                 if (err.name === "SequelizeValidationError") {
                     let errMsg = err.errors.map((el) => el.message)

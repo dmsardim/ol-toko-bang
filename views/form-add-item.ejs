@@ -23,8 +23,14 @@
         <label for="imageUrl">Image Url:</label><br>
         <input type="text" name="imageUrl"><br><br>
 
-        <label for="description">Image Url:</label><br>
+        <label for="description">description:</label><br>
         <textarea  name="description"> </textarea><br><br>
+        
+        <label>Tags:</label><br>
+        <% tags.forEach(({id, name}) => { %>
+            <input type="checkbox" id="<%= name + id %>" name="tags" value="<%= id %>">
+            <label for="<%= name + id %>"><%= name %></label><br>
+        <% }) %>
 
         <button type="submit">Submit</button>
     </form>

@@ -16,7 +16,7 @@ class ControllerBalance {
         Balance.findOne({where: {UserId: UserId}})
         .then((balance) => {
             countAddBalanceBuyer(+amount, balance.UserId)
-            res.redirect(`/items/buyer/${UserId}`)
+            res.redirect('/')
         })
         .catch(err => console.log(err))
     }

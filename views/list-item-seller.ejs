@@ -13,6 +13,8 @@
             <h1 class="ml-10 mb-8 mt-8 font-bold text-2xl" >List Item Pak <%= user.name %> </h1>
             <p class="ml-10 font-bold"><strong>Your Balance: <%= user.Balance.formatBalance() %> </strong></p><br>
             <%- include('./partials/error.ejs') %>
+        
+        
             <form action="/items/seller/<%= user.id %> " method="get" class="flex items-center m-5">
                 <a href="/items/seller/<%= UserId %>/add" class="bg-blue-500 hover:bg-blue-700 text-sm text-white py-1 px-2 rounded-full m-5 ml-8">Add Item</a> 
                 <label for="search" class="sr-only">Search</label>
@@ -112,5 +114,63 @@
     <% } else { %>
         <h2>You're not seller!</h2>
     <% } %>
+
+    <div class="!w-1/2 m-5">
+        <canvas id="myChart"></canvas>
+    </div>
+
+    <% const del =  statistic.map(el => el.a) %> 
+ 
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        const stats = `<%= del %>`
+        const qty = stats.split(',')
+    // setup 
+    const data = {
+      labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+      datasets: [{
+        label: 'Weekly Sales',
+        data: qty,
+        backgroundColor: [
+          'rgba(255, 26, 104, 0.2)',
+          'rgba(54, 162, 235, 0.2)',
+          'rgba(255, 206, 86, 0.2)',
+          'rgba(75, 192, 192, 0.2)',
+          'rgba(153, 102, 255, 0.2)',
+          'rgba(255, 159, 64, 0.2)',
+          'rgba(0, 0, 0, 0.2)'
+        ],
+        borderColor: [
+          'rgba(255, 26, 104, 1)',
+          'rgba(54, 162, 235, 1)',
+          'rgba(255, 206, 86, 1)',
+          'rgba(75, 192, 192, 1)',
+          'rgba(153, 102, 255, 1)',
+          'rgba(255, 159, 64, 1)',
+          'rgba(0, 0, 0, 1)'
+        ],
+        borderWidth: 1
+      }]
+    };
+
+    // config 
+    const config = {
+      type: 'bar',
+      data,
+      options: {
+        scales: {
+          y: {
+            beginAtZero: true
+          }
+        }
+      }
+    };
+
+    // render init block
+    const myChart = new Chart(
+      document.getElementById('myChart'),
+      config
+    );
+    </script>
 </body>
 </html>

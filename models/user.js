@@ -15,6 +15,10 @@ module.exports = (sequelize, DataTypes) => {
       User.hasOne(models.Balance)
       User.hasMany(models.Item)
     }
+
+    get greeting() {
+      return `Assalamualaikum ${this.name}`
+    }
   }
   User.init({
     name: {
