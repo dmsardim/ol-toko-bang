@@ -17,7 +17,6 @@ class Controller {
 
         if(sort) options.order = [['price', sort]]
 
-
         Tag.findAll({ attributes: ['id', 'name'], include: Item })
             .then(result => {
                 data.tags = result

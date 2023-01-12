@@ -8,13 +8,12 @@
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body>
+    <%- include('partials/navbar') %>
     <% if (user) { %>
         <% if (user.role === "seller") { %>
             <h1 class="ml-10 mb-8 mt-8 font-bold text-2xl" >List Item Pak <%= user.name %> </h1>
             <p class="ml-10 font-bold"><strong>Your Balance: <%= user.Balance.formatBalance() %> </strong></p><br>
             <%- include('./partials/error.ejs') %>
-        
-        
             <form action="/items/seller/<%= user.id %> " method="get" class="flex items-center m-5">
                 <a href="/items/seller/<%= UserId %>/add" class="bg-blue-500 hover:bg-blue-700 text-sm text-white py-1 px-2 rounded-full m-5 ml-8">Add Item</a> 
                 <label for="search" class="sr-only">Search</label>
@@ -23,12 +22,6 @@
                         <svg aria-hidden="true" class="w-5 h-5 text-gray-500 dark:text-gray-400" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd"></path></svg>
                     </div>
                     <input type="text" name="byItemName" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="search by item name...">
-                </div>
-                <div class="relative w-40 ml-2">
-                    <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
-                        <svg aria-hidden="true" class="w-5 h-5 text-gray-500 dark:text-gray-400" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd"></path></svg>
-                    </div>
-                    <input type="text" name="byShopName" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="or by shop name...">
                 </div>
         
                 <button type="submit" class="p-2.5 ml-2 text-sm font-medium text-white bg-blue-500 rounded-lg border border-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
@@ -66,7 +59,7 @@
                                 </th>
                                 <td class="px-6 py-4">
                                     <span class="inline-flex items-center gap-1 rounded-full bg-slate-200 px-2 py-1 text-s font-semibold text-black">
-                                        <%= x.formatPrice() %> 
+                                        <%= x.formatPrice %> 
                                     </span>
                                 </td>
                                 <td class="px-6 py-4">

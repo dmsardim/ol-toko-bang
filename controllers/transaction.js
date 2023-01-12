@@ -1,4 +1,4 @@
-const { countStock } = require("../helper");
+const { countBalanceBuyer, countStock, countBalanceSeller, countAddBalanceBuyer } = require("../helper");
 const { Transaction, Item, User, Balance } = require("../models");
 
 class TransactionController {
@@ -22,6 +22,7 @@ class TransactionController {
 
   static carts(req, res) {
     const UserId = req.session.user.id
+    const {errorCheckout} = req.query;
 
     Transaction.findAll({
       attributes: ['id', 'qty', 'subtotal'],
@@ -31,8 +32,8 @@ class TransactionController {
         status: 'cart'
       }
     })
-      .then((carts) => res.render('items/carts', { carts }))
-      .catch((err) => res.send(err))
+      .then((carts) => res.render('items/carts', { carts, errorCheckout }))
+      .catch((err) => console.log(err))
   }
 
   static purchased(req, res) {
@@ -68,11 +69,14 @@ class TransactionController {
       })
       .then((user) => {
         if (user.Balance.dataValues.amount <= checkout.subtotal) {
-          throw 'Your balance not enough'
+          // let errMsg = `Your balance is not enough, Pak ${user.name}!`
+          // res.redirect(`/carts?errorCheckout=${errMsg}`)
+          throw 'Your balance is not enough!'
         }
-        return user.Balance.decrement({ amount: checkout.subtotal })
+        countBalanceBuyer(user, checkout.subtotal)
       })
       .then((_) => {
+        // res.send(checkout);
         return checkout.Item.decrement({ stock: checkout.qty })
       })
       .then((item) => {

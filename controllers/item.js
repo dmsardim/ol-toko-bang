@@ -24,8 +24,6 @@ class ControllerItem {
             }
         }
 
-
-
         let data = {}
         Item.findAll(option)
             .then((items) => {

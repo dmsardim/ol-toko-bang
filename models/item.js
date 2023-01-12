@@ -17,7 +17,7 @@ module.exports = (sequelize, DataTypes) => {
       Item.belongsToMany(models.Tag, {through: models.ItemTag})
     }
 
-    formatPrice() {
+    get formatPrice() {
       return new Intl.NumberFormat("id-ID", {
         style: "currency",
         currency: "IDR"

@@ -16,7 +16,7 @@ module.exports = (sequelize, DataTypes) => {
       User.hasMany(models.Item)
     }
 
-    get greeting() {
+    greeting() {
       return `Assalamualaikum ${this.name}`
     }
   }

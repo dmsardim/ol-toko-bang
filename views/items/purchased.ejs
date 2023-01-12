@@ -18,10 +18,10 @@
       <div class="space-y-5">
         <% carts.forEach(cart => { %>
           <div class="flex gap-3 shadow h-32 ">
-            <img src="https://images.tokopedia.net/img/cache/300-square/attachment/2019/3/23/155332611945862/155332611945862_2d5deb88-f3f5-4d17-bc8e-f302ac0de48c.png" alt="">
+            <img src="<%= cart.Item.imageUrl %> " alt="">
             <div class="p-2">
               <p><%= cart.Item?.name %> </p>
-              <p><%= cart.qty + ' X ' + cart.Item?.formatPrice() %> </p>
+              <p><%= cart.qty + ' X ' + cart.Item?.formatPrice %> </p>
             </div>
             <div class="p-2">
               <a href="/cart/<%= cart.id %>/delete">
