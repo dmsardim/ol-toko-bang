@@ -1,6 +1,6 @@
-const {User, Item, Saldo} = require('../models')
+const {User, Item, Balance} = require('../models')
 const { Op } = require('sequelize')
-const {countStock, countSaldoBuyer, countSaldoSeller} = require('../helper')
+const {countStock, countBalanceBuyer, countBalanceSeller} = require('../helper')
 
 class ControllerItem {
     static listItemSeller(req, res) {
@@ -35,12 +35,12 @@ class ControllerItem {
         Item.findAll(option)
         .then((items) => {
             data.items = items;
-            return User.findByPk(UserId, {include: Saldo})
+            return User.findByPk(UserId, {include: Balance})
         })
         .then((user) => {
             res.render('list-item-seller', {...data, user, UserId, error})
         })
-        .catch((err) => res.send(err))
+        .catch((err) => console.log(err))
     }
 
     static formAddItem (req, res) {
@@ -149,7 +149,7 @@ class ControllerItem {
         .then((items) => {
             let itemForBuyer = items.filter((el) => el.User.role==='seller')
             data.itemForBuyer = itemForBuyer;
-            return  User.findByPk(UserId, {include: Saldo})
+            return  User.findByPk(UserId, {include: Balance})
         })
         .then((userBuyer) => {
             // console.log(data.itemForBuyer[0].User);
@@ -174,14 +174,14 @@ class ControllerItem {
         Item.findByPk(ItemId)
         .then((purchasedItem) => {
             data.purchasedItem = purchasedItem;
-            return User.findByPk(UserId, {include: Saldo})
+            return User.findByPk(UserId, {include: Balance})
         })
         .then((buyer) => {
             if(data.purchasedItem.isReady===false || data.purchasedItem.stock===0) {
                 let errMsg = `Cannot buy item with stock 0, Pak ${buyer.name}!`
                 res.redirect(`/items/buyer/${UserId}?error=${errMsg}`)
-            } else if(buyer.Saldo.dataValues.amount < data.purchasedItem.price) {
-                let errMsg = `Your saldo is not nyampe Pak ${buyer.name}, kuy top up!`
+            } else if(buyer.Balance.dataValues.amount < data.purchasedItem.price) {
+                let errMsg = `Your balance is not nyampe Pak ${buyer.name}, kuy top up!`
                 res.redirect(`/items/buyer/${UserId}?error=${errMsg}`)
             }  else {
                 Item.findByPk(ItemId)
@@ -201,21 +201,20 @@ class ControllerItem {
                             Item.update({isReady: false}, {where: {id: itemId}})
                         }
                     }
-                    return Saldo.findOne({where: {UserId: UserId}})
+                    return Balance.findOne({where: {UserId: UserId}})
                 })
-                .then((saldoBuyer) => {
-                    countSaldoBuyer(data.purchasedItem.price, saldoBuyer.id)
+                .then((balanceBuyer) => {
+                    countBalanceBuyer(data.purchasedItem.price, balanceBuyer.id)
                     let SellerId = data.purchasedItem.UserId
-                    return Saldo.findOne({where: {UserId: SellerId}})
+                    return Balance.findOne({where: {UserId: SellerId}})
                 })
-                .then((saldoSeller) => {
-                    countSaldoSeller(data.purchasedItem.price, saldoSeller.id)
+                .then((balanceSeller) => {
+                    countBalanceSeller(data.purchasedItem.price, balanceSeller.id)
                     res.redirect(`/items/buyer/${UserId}`)
                 })
                 .catch((err) => res.send(err))
             }
         })
-        
     }
 }
 

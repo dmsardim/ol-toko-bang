@@ -12,9 +12,9 @@
         <% if (userBuyer.role === "buyer") { %>
             <h1 class="ml-10 mb-8 mt-8 font-bold text-2xl" >List Item</h1>
             <h3 class="ml-10 font-bold">Happy Shopping Pak <%= userBuyer.name %></h3>
-            <p class="ml-10 font-bold"><strong>Your Saldo: <%= userBuyer.Saldo.formatSaldo() %> </strong></p><br>
+            <p class="ml-10 font-bold"><strong>Your Balance: <%= userBuyer.Balance.formatBalance() %> </strong></p><br>
                 <%- include('./partials/error.ejs') %>
-            <a href="/saldos/addSaldo/<%= UserId %>" class="bg-blue-500 hover:bg-blue-700 text-sm text-white py-1 px-2 rounded-full m-5 ml-8">Add Saldo</a> 
+            <a href="/balances/addBalance/<%= UserId %>" class="bg-blue-500 hover:bg-blue-700 text-sm text-white py-1 px-2 rounded-full m-5 ml-8">Add Balance</a> 
             <a href="/items/buyer/<%= UserId %>/purchasedList" class="bg-blue-500 hover:bg-blue-700 text-sm text-white py-1 px-2 rounded-full m-5">Your purchased list</a>
             <br><br>
 

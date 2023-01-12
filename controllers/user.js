@@ -1,4 +1,4 @@
-const {User, Item, Saldo} = require('../models')
+const {User, Item, Balance} = require('../models')
 const bcrypt = require('bcryptjs')
 const { Op } = require('sequelize')
 
@@ -14,9 +14,9 @@ class ControllerUser {
         User.create(input)
         .then((user) => {
             let UserId = user.dataValues.id
-            return Saldo.create({UserId})
+            return Balance.create({UserId})
         })
-        .then((saldo) => {
+        .then((balance) => {
             res.redirect('/users/login')
         })
         .catch((err) => {
@@ -44,8 +44,9 @@ class ControllerUser {
                     let isValidPassword =  bcrypt.compareSync(password, user.password)
                     if(isValidPassword) {
                         req.session.email = user.email;//set session di controller login
-                        req.session.password = user.password;
-                        // req.session.id = user.id;
+                        // req.session.password = user.password;
+                        req.session.role = user.role;
+                        req.session.id = user.id;
                         // req.session.role = user.role;
                         // res.redirect('/home/sellers')
                         if(user.role==='seller') {

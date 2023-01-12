@@ -3,7 +3,7 @@ const {
   Model
 } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
-  class Saldo extends Model {
+  class Balance extends Model {
     /**
      * Helper method for defining associations.
      * This method is not a part of Sequelize lifecycle.
@@ -11,27 +11,27 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      Saldo.belongsTo(models.User)
+      Balance.belongsTo(models.User)
     }
 
-    formatSaldo() {
+    formatBalance() {
       return new Intl.NumberFormat("id-ID", {
         style: "currency",
         currency: "IDR"
       }).format(this.amount);
     }
   }
-  Saldo.init({
+  Balance.init({
     amount: DataTypes.INTEGER,
     UserId: DataTypes.INTEGER
   }, {
     sequelize,
-    modelName: 'Saldo',
+    modelName: 'Balance',
     hooks: {
-      beforeCreate: (saldo, option) => {
-        saldo.amount = 0
+      beforeCreate: (balance, option) => {
+        balance.amount = 0
       }
     }
   });
-  return Saldo;
+  return Balance;
 };

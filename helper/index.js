@@ -1,4 +1,4 @@
-const {Item, Saldo} = require('../models')
+const {Item, Balance} = require('../models')
 
 const countStock = (SellerId, stockPurchasedItem, itemId) => {
     if(stockPurchasedItem>0) {
@@ -6,16 +6,16 @@ const countStock = (SellerId, stockPurchasedItem, itemId) => {
     }
 }
 
-const countSaldoBuyer = (priceItem, BuyerId) => {
-    return Saldo.decrement({amount:  priceItem}, {where: {id: BuyerId}})
+const countBalanceBuyer = (priceItem, BuyerId) => {
+    return Balance.decrement({amount:  priceItem}, {where: {id: BuyerId}})
 }
 
-const countSaldoSeller = (priceItem, SellerId) => {
-    return Saldo.increment({amount:  priceItem}, {where: {id: SellerId}})
+const countBalanceSeller = (priceItem, SellerId) => {
+    return Balance.increment({amount:  priceItem}, {where: {id: SellerId}})
 }
 
-const countAddSaldoBuyer = (topUp, BuyerId) => {
-    return Saldo.increment( {amount : topUp}, {where: {UserId: BuyerId}})
+const countAddBalanceBuyer = (topUp, BuyerId) => {
+    return Balance.increment( {amount : topUp}, {where: {UserId: BuyerId}})
 }
 
-module.exports = {countStock, countSaldoBuyer, countSaldoSeller, countAddSaldoBuyer}
+module.exports = {countStock, countBalanceBuyer, countBalanceSeller, countAddBalanceBuyer}

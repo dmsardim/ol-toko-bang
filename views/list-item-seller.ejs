@@ -11,7 +11,7 @@
     <% if (user) { %>
         <% if (user.role === "seller") { %>
             <h1 class="ml-10 mb-8 mt-8 font-bold text-2xl" >List Item Pak <%= user.name %> </h1>
-            <p class="ml-10 font-bold"><strong>Your Saldo: <%= user.Saldo.formatSaldo() %> </strong></p><br>
+            <p class="ml-10 font-bold"><strong>Your Balance: <%= user.Balance.formatBalance() %> </strong></p><br>
             <%- include('./partials/error.ejs') %>
             <form action="/items/seller/<%= user.id %> " method="get" class="flex items-center m-5">
                 <a href="/items/seller/<%= UserId %>/add" class="bg-blue-500 hover:bg-blue-700 text-sm text-white py-1 px-2 rounded-full m-5 ml-8">Add Item</a> 

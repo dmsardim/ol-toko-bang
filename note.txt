@@ -1,0 +1,7 @@
+1. req session
+2. sort
+3. chart js
+4. many to many
+5. static method
+6. instance method
+7. add mvp
