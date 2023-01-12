@@ -19,6 +19,5 @@ router.get('/seller/:UserId/delete/:ItemId', isSeller, ControllerItem.deleteItem
 router.get('/seller/:UserId/update/:ItemId', isSeller, ControllerItem.updateItem)
 
 router.get('/buyer/:UserId', isBuyer, ControllerItem.listItemForBuyer)
-router.get('/buyer/:UserId/buy/:ItemId', isBuyer, ControllerItem.buyItem)
 
 module.exports = router

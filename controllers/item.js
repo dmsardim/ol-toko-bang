@@ -193,57 +193,6 @@ class ControllerItem {
             })
             .catch((err) => res.send(err))
     }
-
-    static buyItem(req, res) {
-        const { UserId, ItemId } = req.params;
-        let data = {}
-        Item.findByPk(ItemId)
-            .then((purchasedItem) => {
-                data.purchasedItem = purchasedItem;
-                return User.findByPk(UserId, { include: Balance })
-            })
-            .then((buyer) => {
-                console.log(buyer)
-                if (data.purchasedItem.isReady === false || data.purchasedItem.stock === 0) {
-                    let errMsg = `Cannot buy item with stock 0, Pak ${buyer.name}!`
-                    res.redirect(`/items/buyer/${UserId}?error=${errMsg}`)
-                } else if (buyer.Balance.dataValues.amount < data.purchasedItem.price) {
-                    let errMsg = `Your balance is not nyampe Pak ${buyer.name}, kuy top up!`
-                    res.redirect(`/items/buyer/${UserId}?error=${errMsg}`)
-                } else {
-                    Item.findByPk(ItemId)
-                        // .then((purchasedItem) => {
-                        //     data.purchasedItem = purchasedItem;
-                        //     const { name, price, stock, imageUrl } = purchasedItem;
-                        //     let input = { name, price, stock: 0, imageUrl, UserId }
-                        //     return Item.create(input)
-                        // })
-                        .then((purchasedItem) => {
-                            data.purchasedItem = purchasedItem;
-                            let stockPurchasedItem = data.purchasedItem.stock;
-                            let sellerId = data.purchasedItem.UserId
-                            let itemId = data.purchasedItem.id
-                            countStock(sellerId, stockPurchasedItem, itemId)
-                            if (countStock) {
-                                if (stockPurchasedItem == 1) {
-                                    Item.update({ isReady: false }, { where: { id: itemId } })
-                                }
-                            }
-                            return Balance.findOne({ where: { UserId: UserId } })
-                        })
-                        .then((balanceBuyer) => {
-                            countBalanceBuyer(data.purchasedItem.price, balanceBuyer.id)
-                            let SellerId = data.purchasedItem.UserId
-                            return Balance.findOne({ where: { UserId: SellerId } })
-                        })
-                        .then((balanceSeller) => {
-                            countBalanceSeller(data.purchasedItem.price, balanceSeller.id)
-                            res.redirect(`/items/buyer/${UserId}`)
-                        })
-                        .catch((err) => res.send(err))
-                }
-            })
-    }
 }
 
 module.exports = ControllerItem
