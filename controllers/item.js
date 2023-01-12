@@ -186,6 +186,7 @@ class ControllerItem {
                 return User.findByPk(UserId, { include: Balance })
             })
             .then((buyer) => {
+                console.log(buyer)
                 if (data.purchasedItem.isReady === false || data.purchasedItem.stock === 0) {
                     let errMsg = `Cannot buy item with stock 0, Pak ${buyer.name}!`
                     res.redirect(`/items/buyer/${UserId}?error=${errMsg}`)
@@ -194,13 +195,14 @@ class ControllerItem {
                     res.redirect(`/items/buyer/${UserId}?error=${errMsg}`)
                 } else {
                     Item.findByPk(ItemId)
+                        // .then((purchasedItem) => {
+                        //     data.purchasedItem = purchasedItem;
+                        //     const { name, price, stock, imageUrl } = purchasedItem;
+                        //     let input = { name, price, stock: 0, imageUrl, UserId }
+                        //     return Item.create(input)
+                        // })
                         .then((purchasedItem) => {
                             data.purchasedItem = purchasedItem;
-                            const { name, price, stock, imageUrl } = purchasedItem;
-                            let input = { name, price, stock: 0, imageUrl, UserId }
-                            return Item.create(input)
-                        })
-                        .then(() => {
                             let stockPurchasedItem = data.purchasedItem.stock;
                             let sellerId = data.purchasedItem.UserId
                             let itemId = data.purchasedItem.id
