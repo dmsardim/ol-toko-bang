@@ -63,8 +63,8 @@ class ControllerItem {
 
     static submitAddItem(req, res) {
         const { UserId } = req.params
-        const { name, price, stock, imageUrl } = req.body;
-        const input = { name, price, stock, imageUrl, UserId }
+        const { name, price, stock, imageUrl, description } = req.body;
+        const input = { name, price, stock, imageUrl, UserId, description }
         Item.create(input)
             .then(() => {
                 res.redirect(`/items/seller/${UserId}`)

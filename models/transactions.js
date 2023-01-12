@@ -14,6 +14,13 @@ module.exports = (sequelize, DataTypes) => {
       Transaction.belongsTo(models.Item)
       Transaction.belongsTo(models.User)
     }
+
+    formatPrice() {
+      return new Intl.NumberFormat("id-ID", {
+        style: "currency",
+        currency: "IDR"
+      }).format(this.subtotal)
+    }
   }
   Transaction.init({
     qty: DataTypes.INTEGER,

@@ -8,6 +8,7 @@ router.post('/register', ControllerUser.submitRegisterUser)
 
 router.get('/login', ControllerUser.formLoginUser)
 router.post('/login', ControllerUser.submitLoginUser)
+router.get('/logout', ControllerUser.logout)
 
 
 

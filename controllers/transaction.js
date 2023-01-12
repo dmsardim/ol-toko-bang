@@ -19,13 +19,22 @@ class TransactionController {
     const UserId = req.session.user.id
 
     Transaction.findAll({
+      attributes:['id', 'qty', 'subtotal'],
       include: Item,
       where: {
         UserId,
         status: 'cart'
       }
     })
-      .then((carts) => res.render('items/carts' ,{ carts }))
+      .then((carts) => res.render('items/carts', {carts} ))
+      .catch((err) => res.send(err))
+  }
+
+  static deleteCart(req, res) {
+    const { id } = req.params
+
+    Transaction.destroy({ where: { id } })
+      .then((_) => res.redirect('/carts'))
       .catch((err) => res.send(err))
   }
 }

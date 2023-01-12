@@ -11,9 +11,9 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      Item.belongsToMany(models.User, {through: models.Transaction})
-      Item.hasMany(models.ItemTag)
+      Item.hasMany(models.Transaction)
       Item.belongsTo(models.User)
+      Item.hasMany(models.ItemTag)
       Item.belongsToMany(models.Tag, {through: models.ItemTag})
     }
 

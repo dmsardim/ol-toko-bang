@@ -2,19 +2,8 @@ const express = require('express')
 const router = express.Router()
 
 const ControllerItem = require('../controllers/item')
-const TransactionController = require('../controllers/transaction')
-const { auth } = require('../middleware')
+const { isSeller, isBuyer } = require('../middleware')
 
-const isSeller = (req, res, next) => {
-    // console.log(req.session);
-    const {id} = req.session.id;
-    if(req.session.role != "seller") {
-        const msg = "you're not a seller!"
-        res.redirect(`/?validationLogin=${msg}`)
-    } else {
-        next()
-    }
-}
 
 router.get('/seller/:UserId', isSeller, ControllerItem.listItemSeller)
 
@@ -29,16 +18,6 @@ router.post('/seller/:UserId/edit/:ItemId', isSeller, ControllerItem.submitEditI
 router.get('/seller/:UserId/delete/:ItemId', isSeller, ControllerItem.deleteItem)
 router.get('/seller/:UserId/update/:ItemId', isSeller, ControllerItem.updateItem)
 
-const isBuyer = (req, res, next) => {
-    // console.log(req.session);
-    const {id} = req.session.id;
-    if(req.session.role != "buyer") {
-        const msg = "you're not a buyer!"
-        res.redirect(`/?validationLogin=${msg}`)
-    } else {
-        next()
-    }
-}
 router.get('/buyer/:UserId', isBuyer, ControllerItem.listItemForBuyer)
 router.get('/buyer/:UserId/buy/:ItemId', isBuyer, ControllerItem.buyItem)
 

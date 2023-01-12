@@ -13,17 +13,10 @@ const { auth } = require('../middleware')
 
 router.get('/', Controller.home)
 router.use('/users', routerUsers)
-router.use((req, res, next) => {
-    console.log(req.session)
-    if(!req.session.id) {
-        const msg = "login first!"
-        res.redirect(`/users/login?validationLogin=${msg}`)
-    } else {
-        next()
-    }
-})
+router.use(auth)
+router.use(routerTrans)
 router.use('/balances', routerBalance)
 router.use('/items', routerItems)
-router.use('/tags', auth, routerTags)
+router.use('/tags', routerTags)
 
 module.exports = router
