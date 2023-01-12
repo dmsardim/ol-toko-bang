@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://kit.fontawesome.com/03c8d5d9a1.js" crossorigin="anonymous"></script>
+</head>
+<body>
+  <%- include('../partials/navbar') %>
+  <div class="flex gap-4 max-w-4xl my-14  mx-auto">
+    <img class="object-cover" src="https://images.tokopedia.net/img/cache/300-square/attachment/2019/3/23/155332611945862/155332611945862_2d5deb88-f3f5-4d17-bc8e-f302ac0de48c.png" alt="image">
+    <div class="flex-1">
+      <div>
+        <h1 class="text-2xl"><%= item.name %> </h1>
+        <h1><%= item.formatPrice() %></h1>
+        <h1>stock: <%= item.stock %> </h1>
+        <h1>description: <%= item.description %> </h1>
+      </div>
+      <form action="/cart/<%= item.id %>/addCart" method="post">
+        <input class="border" type="number" name="qty" required>
+        <button>Add to cart</button>
+      </form>
+    </div>
+  </div>
+</body>
+</html>

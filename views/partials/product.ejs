@@ -1,7 +1,7 @@
-<div class="shadow-md rounded-lg hover:shadow-lg hover:-translate-y-1 transition-all duration-200">
-  <img class="w-full" src="https://images.tokopedia.net/img/cache/300-square/attachment/2019/3/23/155332611945862/155332611945862_2d5deb88-f3f5-4d17-bc8e-f302ac0de48c.png" alt="asd">
+<a href="/items/<%= item.id %> " class="shadow-md rounded-lg hover:shadow-lg hover:-translate-y-1 transition-all duration-200">
+  <img class="w-full object-cover" src="https://images.tokopedia.net/img/cache/300-square/attachment/2019/3/23/155332611945862/155332611945862_2d5deb88-f3f5-4d17-bc8e-f302ac0de48c.png" alt="asd">
   <div class="px-2 py-4">
-    <p class="text-sm">Baju alus Pisan eung euy</p>
-    <p class="font-semibold">Rp 5000</p>
+    <p class="text-sm"><%= item.name %> </p>
+    <p class="font-semibold"><%= item.formatPrice() %> </p>
   </div>
-</div>
+</a>

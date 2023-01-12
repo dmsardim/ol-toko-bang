@@ -6,6 +6,7 @@ const routerUsers = require('./users')
 const routerSaldos = require('./saldos')
 const routerItems = require('./items')
 const routerTags = require('./tags')
+const routerTrans = require('./transaction')
 
 const { auth } = require('../middleware')
 
@@ -14,7 +15,8 @@ router.get('/', Controller.home)
 router.use('/users', routerUsers)
 
 router.use('/saldos', auth, routerSaldos)
-router.use('/items', auth, routerItems)
+router.use('/', routerTrans)
+router.use('/items', routerItems)
 router.use('/tags', auth, routerTags)
 
 module.exports = router

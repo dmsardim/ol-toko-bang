@@ -1,8 +1,9 @@
-
+const { Item } = require('../models')
 class Controller {
     static home(req, res) {
-        console.log(res.locals)
-        res.render('home', { isAuth: true })
+        Item.findAll()
+            .then(items => res.render('home', { items }))
+            .catch(err => res.send(err))
     }
 }
 
