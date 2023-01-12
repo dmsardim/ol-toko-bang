@@ -21,17 +21,14 @@
             <img src="<%= cart.Item.imageUrl %> " alt="">
             <div class="p-2">
               <p><%= cart.Item?.name %> </p>
-              <p><%= cart.qty + ' X ' + cart.Item?.formatPrice %> </p>
-            </div>
-            <div class="p-2">
-              <a href="/cart/<%= cart.id %>/delete">
-                <i class="fas fa-trash"></i>
-              </a>
-              <a href="/carts/<%= cart.id %>/checkout">Checkout</a>
+              <p><%= cart.qty + ' X ' + cart.Item?.formatPrice %></p>
+              <p><strong><%= cart.qty * cart.Item.price %></strong></p>
             </div>
           </div>
           <% }) %>
-      </div>
+        </div>
+        <br><br>
+        <h2>Your total history payment: <strong><%= total %></strong></h2>
   </div>
 </body>
 </html>

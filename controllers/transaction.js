@@ -1,4 +1,4 @@
-const { countBalanceBuyer, countStock, countBalanceSeller, countAddBalanceBuyer } = require("../helper");
+const { countBalanceBuyer, totalPrice } = require("../helper");
 const { Transaction, Item, User, Balance } = require("../models");
 
 class TransactionController {
@@ -47,8 +47,11 @@ class TransactionController {
         status: 'checkout'
       }
     })
-      .then((carts) => res.render('items/purchased', { carts }))
-      .catch((err) => res.send(err))
+      .then((carts) => {
+        let total = totalPrice(carts)
+        res.render('items/purchased', { carts, total })
+      })
+      .catch((err) => console.log(err))
   }
 
   static deleteCart(req, res) {
