@@ -1,6 +1,6 @@
 const { countBalanceBuyer, totalPrice } = require("../helper");
 const { Transaction, Item, User, Balance } = require("../models");
-
+const sendMail = require("../helper/nodemailer");
 class TransactionController {
   
   static addCart(req, res) {
@@ -65,6 +65,7 @@ class TransactionController {
   static checkout(req, res) {
     const { id } = req.params
     let checkout;
+    let seller = {}
     Transaction.findByPk(id, { include: { model: Item, include: { model: User, include: Balance } } })
       .then((cart) => {
         checkout = cart
@@ -76,16 +77,18 @@ class TransactionController {
           // res.redirect(`/carts?errorCheckout=${errMsg}`)
           throw 'Your balance is not enough!'
         }
-        countBalanceBuyer(user, checkout.subtotal)
+        return countBalanceBuyer(user, checkout.subtotal)
       })
       .then((_) => {
         // res.send(checkout);
         return checkout.Item.decrement({ stock: checkout.qty })
       })
       .then((item) => {
+        seller = item.User
         return item.User.Balance.increment({ amount: checkout.subtotal })
       })
       .then((_) => {
+        sendMail(seller)
         return checkout.update({ status: 'checkout' })
       }).then((_) => res.redirect('/carts'))
 

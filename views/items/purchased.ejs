@@ -22,7 +22,7 @@
             <div class="p-2">
               <p><%= cart.Item?.name %> </p>
               <p><%= cart.qty + ' X ' + cart.Item?.formatPrice %></p>
-              <p><strong><%= cart.qty * cart.Item.price %></strong></p>
+              <p><strong><%= cart.formatPrice() %></strong></p>
             </div>
           </div>
           <% }) %>

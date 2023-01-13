@@ -22,12 +22,12 @@ const countStock = (checkout, qty) => {
 //     return Balance.increment({amount:  priceItem}, {where: {id: SellerId}})
 // }
 
-// const countAddBalanceBuyer = (topUp, BuyerId) => {
-//     return Balance.increment( {amount : topUp}, {where: {UserId: BuyerId}})
-// }
+const countAddBalanceBuyer = (topUp, BuyerId) => {
+    return Balance.increment( {amount : topUp}, {where: {UserId: BuyerId}})
+}
 
 const totalPrice = (arr) => {
     return arr.map(p => p.qty * p.subtotal).reduce((a,b) => a + b)
 }
 
-module.exports = {countBalanceBuyer, countStock, totalPrice}
+module.exports = {countBalanceBuyer, countStock, totalPrice, countAddBalanceBuyer}
