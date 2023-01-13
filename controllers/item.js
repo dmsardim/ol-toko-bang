@@ -44,7 +44,7 @@ class ControllerItem {
             .then((stat) => {
                 res.render('list-item-seller', { ...data, UserId, error, statistic: stat[0] })
             })
-            .catch((err) => console.log(err))
+            .catch((err) => res.send(err))
     }
 
     static detailItem(req, res) {
@@ -77,6 +77,7 @@ class ControllerItem {
         const input = { name, price, stock, imageUrl, UserId, description }
         Item.create(input)
             .then((item) => {
+                console.log(tags, 'ini tag')
                 const dataTags = tags.map(el => {
                     return { ItemId: item.id, TagId: el }
                 })
