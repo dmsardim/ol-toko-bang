@@ -12,7 +12,7 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       // define association here
       Tag.hasMany(models.ItemTag)
-      Tag.belongsToMany(models.Item, {through: models.ItemTag})
+      Tag.belongsToMany(models.Item, { through: models.ItemTag, onDelete: 'cascade', onUpdate: 'cascade' })
     }
   }
   Tag.init({
