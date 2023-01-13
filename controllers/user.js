@@ -1,4 +1,4 @@
-const {User, Item, Balance} = require('../models')
+const { User, Item, Balance } = require('../models')
 const bcrypt = require('bcryptjs')
 const { Op } = require('sequelize')
 
@@ -12,21 +12,21 @@ class ControllerUser {
         const { name, email, password, noHandphone, role } = req.body;
         const input = { name, email, password, noHandphone, role }
         User.create(input)
-        .then((user) => {
-            let UserId = user.dataValues.id
-            return Balance.create({UserId})
-        })
-        .then((balance) => {
-            res.redirect('/users/login')
-        })
-        .catch((err) => {
-            if(err.name === "SequelizeValidationError") {
-                let errMsg = err.errors.map((el) => el.message)
-                res.redirect(`/users/register?error=${errMsg}`)
-            } else {
-                res.send(err)
-            }
-        })
+            .then((user) => {
+                let UserId = user.dataValues.id
+                return Balance.create({ UserId })
+            })
+            .then((balance) => {
+                res.redirect('/users/login')
+            })
+            .catch((err) => {
+                if (err.name === "SequelizeValidationError") {
+                    let errMsg = err.errors.map((el) => el.message)
+                    res.redirect(`/users/register?error=${errMsg}`)
+                } else {
+                    res.send(err)
+                }
+            })
     }
 
     static formLoginUser(req, res) {
@@ -46,14 +46,10 @@ class ControllerUser {
         User.findOne({ where: { email: email } })
             .then((user) => {
                 if (user) {
-                    // console.log(user.id);
                     if (user.email) {
                         let isValidPassword = bcrypt.compareSync(password, user.password)
                         if (isValidPassword) {
-                            req.session.user = user;//set session di controller login
-                            // req.session.id = user.id;
-                            // req.session.role = user.role;
-                            // res.redirect('/home/sellers')
+                            req.session.user = { id: user.id, role: user.role };
                             if (user.role === 'seller') {
                                 return res.redirect(`/items/seller/${user.id}`)
                             } else {

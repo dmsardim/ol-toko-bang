@@ -23,7 +23,6 @@ class ControllerItem {
                 [Op.iLike]: `%${byItemName}%`
             }
         }
-
         let data = {}
         Item.findAll(option)
             .then((items) => {
@@ -75,6 +74,9 @@ class ControllerItem {
         const { UserId } = req.params
         const { name, price, stock, imageUrl, description, tags } = req.body;
         const input = { name, price, stock, imageUrl, UserId, description }
+        if(!tags){
+           return res.redirect(`/items/seller/${UserId}/add?error=tags%20required!`)
+        }
         Item.create(input)
             .then((item) => {
                 console.log(tags, 'ini tag')
@@ -90,6 +92,8 @@ class ControllerItem {
                     let errMsg = err.errors.map((el) => el.message)
                     res.redirect(`/items/seller/${UserId}/add?error=${errMsg}`)
                 } else {
+                    console.log(err)
+
                     res.send(err)
                 }
             })
@@ -107,8 +111,8 @@ class ControllerItem {
 
     static submitEditItem(req, res) {
         const { UserId, ItemId } = req.params;
-        const { name, price, stock, imageUrl } = req.body;
-        const input = { name, price, stock, imageUrl, UserId }
+        const { name, price, stock, imageUrl, description } = req.body;
+        const input = { name, price, stock, imageUrl, UserId, description }
         Item.update(input, { where: { id: ItemId } })
             .then(() => {
                 res.redirect(`/items/seller/${UserId}`)

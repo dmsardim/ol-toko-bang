@@ -14,7 +14,7 @@ module.exports = (sequelize, DataTypes) => {
       Item.hasMany(models.Transaction)
       Item.belongsTo(models.User)
       Item.hasMany(models.ItemTag)
-      Item.belongsToMany(models.Tag, {through: models.ItemTag})
+      Item.belongsToMany(models.Tag, { through: models.ItemTag, onDelete: 'cascade', onUpdate: 'cascade' })
     }
 
     get formatPrice() {
