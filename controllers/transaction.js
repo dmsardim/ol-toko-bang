@@ -2,15 +2,15 @@ const { countBalanceBuyer, totalPrice } = require("../helper");
 const { Transaction, Item, User, Balance } = require("../models");
 const sendMail = require("../helper/nodemailer");
 class TransactionController {
-  
+
   static addCart(req, res) {
     const { qty } = req.body
     const { id } = req.params
     const UserId = req.session.user.id
-    
+
     Item.findByPk(id)
       .then((item) => {
-        if(item.stock < qty){
+        if (item.stock < qty) {
           throw 'Cannot add item to cart!'
         }
         const subtotal = item.price * qty
@@ -22,7 +22,7 @@ class TransactionController {
 
   static carts(req, res) {
     const UserId = req.session.user.id
-    const {errorCheckout} = req.query;
+    const { error } = req.query;
 
     Transaction.findAll({
       attributes: ['id', 'qty', 'subtotal'],
@@ -32,7 +32,7 @@ class TransactionController {
         status: 'cart'
       }
     })
-      .then((carts) => res.render('items/carts', { carts, errorCheckout }))
+      .then((carts) => res.render('items/carts', { carts, error }))
       .catch((err) => console.log(err))
   }
 
@@ -75,7 +75,7 @@ class TransactionController {
         if (user.Balance.dataValues.amount <= checkout.subtotal) {
           // let errMsg = `Your balance is not enough, Pak ${user.name}!`
           // res.redirect(`/carts?errorCheckout=${errMsg}`)
-          throw 'Your balance is not enough!'
+          throw { err: 'valid', msg: 'Your balance is not enough!' }
         }
         return countBalanceBuyer(user, checkout.subtotal)
       })
@@ -92,7 +92,13 @@ class TransactionController {
         return checkout.update({ status: 'checkout' })
       }).then((_) => res.redirect('/carts'))
 
-      .catch((err) => res.send(err))
+      .catch((err) => {
+        if(err.err == 'valid'){
+          return res.redirect(`/carts?error=${err.msg}`)
+        }
+        console.log(err)
+        res.send(err)
+      })
   }
 }
 

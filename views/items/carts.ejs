@@ -9,12 +9,13 @@
   <script src="https://kit.fontawesome.com/03c8d5d9a1.js" crossorigin="anonymous"></script>
 </head>
 <body>
-  <%- include('../partials/navbar') %>
-
+  <%- include('../partials/navbar', error) %>
+  
   <div class="max-w-4xl my-14  mx-auto">
-      <div class="text-2xl font-bold">
-        Carts
-      </div>
+    <div class="text-2xl font-bold">
+      Carts
+    </div>
+    <%- include('../partials/error', error) %>
       <hr class="my-5">
       <div class="space-y-5">
         <% carts.forEach(cart => { %>
