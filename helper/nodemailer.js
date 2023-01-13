@@ -19,7 +19,7 @@ const sendMail = (user) => {
       <h1 style="text-align:center; font-wight:bold;"> TOKOBANG </h1>
       Hallo, ${user.dataValues.name} 
       barang yang anda jual di tokobang ada yang beli nihhh,
-      saldo anda menjadi ${user.dataValues.dataValues.amount}, yuuk segera cek ke website nyaa
+      saldo anda menjadi ${user.dataValues.Balance.dataValues.amount}, yuuk segera cek ke website nyaa
     `
   };
   transporter.sendMail(mailOptions, function (error, info) {
