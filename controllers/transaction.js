@@ -1,4 +1,4 @@
-const { countBalanceBuyer, totalPrice } = require("../helper");
+const { countBalanceBuyer } = require("../helper");
 const { Transaction, Item, User, Balance } = require("../models");
 const sendMail = require("../helper/nodemailer");
 class TransactionController {
@@ -48,7 +48,7 @@ class TransactionController {
       }
     })
       .then((carts) => {
-        let total = totalPrice(carts)
+        let total = Transaction.countTotalPrice(carts)
         res.render('items/purchased', { carts, total })
       })
       .catch((err) => console.log(err))

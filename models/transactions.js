@@ -21,6 +21,10 @@ module.exports = (sequelize, DataTypes) => {
         currency: "IDR"
       }).format(this.subtotal)
     }
+
+    static countTotalPrice(arr) {
+      return arr.map(p => p.qty * p.subtotal).reduce((a,b) => a + b)
+    }
   }
   Transaction.init({
     qty: DataTypes.INTEGER,
