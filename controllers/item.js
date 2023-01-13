@@ -23,7 +23,6 @@ class ControllerItem {
                 [Op.iLike]: `%${byItemName}%`
             }
         }
-
         let data = {}
         Item.findAll(option)
             .then((items) => {
@@ -44,7 +43,7 @@ class ControllerItem {
             .then((stat) => {
                 res.render('list-item-seller', { ...data, UserId, error, statistic: stat[0] })
             })
-            .catch((err) => console.log(err))
+            .catch((err) => res.send(err))
     }
 
     static detailItem(req, res) {
