@@ -49,7 +49,7 @@ class ControllerUser {
                     if (user.email) {
                         let isValidPassword = bcrypt.compareSync(password, user.password)
                         if (isValidPassword) {
-                            req.session.user = { id: user.id, role: user.role };
+                            req.session.user = { id: user.id, role: user.role, name: user.name };
                             if (user.role === 'seller') {
                                 return res.redirect(`/items/seller/${user.id}`)
                             } else {

@@ -1,8 +1,7 @@
-const { countBalanceBuyer } = require("../helper");
+const { countBalanceBuyer, formatIDR } = require("../helper");
 const { Transaction, Item, User, Balance } = require("../models");
 const sendMail = require("../helper/nodemailer");
 class TransactionController {
-
   static addCart(req, res) {
     const { qty } = req.body
     const { id } = req.params
@@ -48,8 +47,9 @@ class TransactionController {
       }
     })
       .then((carts) => {
-        let total = Transaction.countTotalPrice(carts)
-        res.render('items/purchased', { carts, total })
+        let totalIDR = formatIDR(Transaction.countTotalPrice(carts))
+
+        res.render('items/purchased', { carts, totalIDR })
       })
       .catch((err) => console.log(err))
   }
@@ -90,7 +90,8 @@ class TransactionController {
       .then((_) => {
         sendMail(seller)
         return checkout.update({ status: 'checkout' })
-      }).then((_) => res.redirect('/carts'))
+      })
+      .then((_) => res.redirect('/carts'))
 
       .catch((err) => {
         if(err.err == 'valid'){

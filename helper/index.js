@@ -30,4 +30,11 @@ const countAddBalanceBuyer = (topUp, BuyerId) => {
 //     return arr.map(p => p.qty * p.subtotal).reduce((a,b) => a + b)
 // }
 
-module.exports = {countBalanceBuyer, countStock, countAddBalanceBuyer}
+const formatIDR = (target) => {
+    return new Intl.NumberFormat("id-ID", {
+        style: "currency",
+        currency: "IDR"
+      }).format(target)
+}
+
+module.exports = {countBalanceBuyer, countStock, countAddBalanceBuyer, formatIDR}

@@ -79,8 +79,8 @@ class ControllerItem {
         }
         Item.create(input)
             .then((item) => {
-                console.log(tags, 'ini tag')
-                const dataTags = tags.map(el => {
+                let arr = [...tags]
+                const dataTags = arr.map(el => {
                     return { ItemId: item.id, TagId: el }
                 })
                 return ItemTag.bulkCreate(dataTags, {})
@@ -92,8 +92,6 @@ class ControllerItem {
                     let errMsg = err.errors.map((el) => el.message)
                     res.redirect(`/items/seller/${UserId}/add?error=${errMsg}`)
                 } else {
-                    console.log(err)
-
                     res.send(err)
                 }
             })
@@ -186,7 +184,6 @@ class ControllerItem {
             })
             .catch((err) => res.send(err))
     }
-
 
     static listBuyer(req, res) {
         User.findAll({ include: Item })
